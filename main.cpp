@@ -6,7 +6,7 @@ using namespace std;
 int main() {
     string comando, argumento;
     
-    cout << "--- Unix Terminal Sim v1.0 ---" << endl;
+    cout << "--- Unix Terminal Sim v1.0.0.0 ---" << endl;
 
     while (true) {
         cout << obtenerRuta(actual) << "> ";
