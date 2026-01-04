@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
 
-// Estructura del Nodo (Carpeta o Archivo)
 struct Nodo {
     string nombre;
     bool esCarpeta;
