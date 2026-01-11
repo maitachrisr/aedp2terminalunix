@@ -6,7 +6,7 @@ using namespace std;
 int main() {
     string comando, argumento;
     
-    cout << "--- Terminal Unix V.1.0.1.0 ---" << endl;
+    cout << "--- Terminal Unix V.1.0.1.2 ---" << endl;
 
     while (true) {
         cout << obtenerRuta(actual) << "> ";
