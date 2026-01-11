@@ -1,3 +1,5 @@
+// HECHO POR CHRISTOPHER MAITA, ANGEL RUEDAS Y GERMAN MATHEO
+
 #include <iostream>
 using namespace std;
 
@@ -18,13 +20,12 @@ struct Nodo {
     }
 };
 
-// Variables Globales de Navegación
 Nodo* raiz = new Nodo("/", true, nullptr);
 Nodo* actual = raiz;
 
-// --- Funciones de Utilidad ---
+// --- Funciones de utilidad ---
 
-// Busca un hijo por nombre en el directorio actual
+// busca un hijo por nombre en el directorio actual
 Nodo* buscarHijo(Nodo* dir, string nombre) {
     if (dir == nullptr) return nullptr;
     
@@ -36,7 +37,7 @@ Nodo* buscarHijo(Nodo* dir, string nombre) {
     return nullptr;
 }
 
-// Comando mkdir y touch (la lógica es similar)
+// comando mkdir y touch
 void crearEntrada(string nombre, bool esCarpeta) {
     if (nombre == ""){
         cout << "Error: nombre invalido.\n";
@@ -60,7 +61,7 @@ void crearEntrada(string nombre, bool esCarpeta) {
     }
 }
 
-// Comando ls
+// comando ls
 void listar() {
     if (actual->primerHijo == nullptr) {
         cout << "(directorio vacio)\n";
@@ -76,7 +77,7 @@ void listar() {
     cout << endl;
 }
 
-// Comando cd
+// comando cd
 void cambiarDirectorio(string nombre) {
     
     if (nombre == "..") {
@@ -101,11 +102,80 @@ void cambiarDirectorio(string nombre) {
     }
 }
 
-// Función para obtener la ruta actual (recursiva)
+// funcion para obtener la ruta actual
 string obtenerRuta(Nodo* nodo) {
     if (nodo == raiz) return "/";
 
     return obtenerRuta(nodo->padre) + 
         (nodo->padre == raiz ? "" : "/") + 
         nodo->nombre;
+}
+
+// funcion para eliminar un nodo y liberar su memoria recursivamente
+void eliminarRecursivo(Nodo* nodo) {
+    if (nodo == nullptr) return;
+    eliminarRecursivo(nodo->primerHijo);
+    eliminarRecursivo(nodo->hermanoDerecho);
+    delete nodo;
+}
+
+// comando del
+void eliminarEntrada(string nombre) {
+    if (nombre == "." || nombre == "..") return;
+
+    Nodo* anterior = nullptr;
+    Nodo* objetivo = actual->primerHijo;
+
+    while (objetivo != nullptr && objetivo->nombre != nombre) {
+        anterior = objetivo;
+        objetivo = objetivo->hermanoDerecho;
+    }
+
+    if (!objetivo) {
+        cout << "Error: No se encontro el archivo o carpeta.\n";
+        return;
+    }
+
+    // desconectar el nodo
+    if (anterior == nullptr) {
+        actual->primerHijo = objetivo->hermanoDerecho;
+    } else {
+        anterior->hermanoDerecho = objetivo->hermanoDerecho;
+    }
+
+    objetivo->hermanoDerecho = nullptr; 
+    eliminarRecursivo(objetivo);
+    cout << "Eliminado correctamente.\n";
+}
+
+// comando mv
+void moverEntrada(string nombre, string destinoNombre) {
+    // busca el nodo a mover
+    Nodo* anterior = nullptr;
+    Nodo* objetivo = actual->primerHijo;
+    while (objetivo != nullptr && objetivo->nombre != nombre) {
+        anterior = objetivo;
+        objetivo = objetivo->hermanoDerecho;
+    }
+
+    // busca el destino
+    Nodo* destino = buscarHijo(actual, destinoNombre);
+
+    if (!objetivo) {
+        cout << "Error: No se encontro el origen.\n";
+        return;
+    }
+    if (!destino || !destino->esCarpeta) {
+        cout << "Error: El destino no existe o no es una carpeta.\n";
+        return;
+    }
+
+    // desconectar de la ubicacion original
+    if (anterior == nullptr) actual->primerHijo = objetivo->hermanoDerecho;
+    else anterior->hermanoDerecho = objetivo->hermanoDerecho;
+
+    // conectar al nuevo destino
+    objetivo->padre = destino;
+    objetivo->hermanoDerecho = destino->primerHijo;
+    destino->primerHijo = objetivo;
 }

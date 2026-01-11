@@ -1,3 +1,5 @@
+// HECHO POR CHRISTOPHER MAITA, ANGEL RUEDAS Y GERMAN MATHEO
+
 #include <iostream>
 #include "lib.h"
 
@@ -6,14 +8,13 @@ using namespace std;
 int main() {
     string comando, argumento, destino;
     
-    cout << "--- Terminal Unix V.1.0.1.2 ---" << endl;
+    cout << "--- Terminal Unix V.1.0.2.0 ---" << endl;
 
     while (true) {
         cout << obtenerRuta(actual) << "> ";
         cin >> comando;
 
         if (comando == "exit") {
-            // Recuerda que al salir debes guardar los cambios en el archivo original para la persistencia 
             break;
         } 
         else if (comando == "ls") {
@@ -42,9 +43,16 @@ int main() {
         }
         else if (comando == "mv") {
             if (!(cin >> argumento >> destino)) {
-                cout << "Error: mv requiere origen y destino." << endl;
+                cout << "Error: faltan argumentos (mv <nombre> <destino>)." << endl;
             } else {
                 moverEntrada(argumento, destino);
+            }
+        }
+        else if (comando == "del") {
+            if (!(cin >> argumento)) {
+                cout << "Error: falta el nombre a eliminar." << endl;
+            } else {
+                eliminarEntrada(argumento);
             }
         }
         else {
