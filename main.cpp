@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    string comando, argumento;
+    string comando, argumento, destino;
     
     cout << "--- Terminal Unix V.1.0.1.2 ---" << endl;
 
@@ -13,6 +13,7 @@ int main() {
         cin >> comando;
 
         if (comando == "exit") {
+            // Recuerda que al salir debes guardar los cambios en el archivo original para la persistencia 
             break;
         } 
         else if (comando == "ls") {
@@ -37,6 +38,13 @@ int main() {
                 cout << "Error: falta el nombre del directorio." << endl;
             } else {
                 cambiarDirectorio(argumento);
+            }
+        }
+        else if (comando == "mv") {
+            if (!(cin >> argumento >> destino)) {
+                cout << "Error: mv requiere origen y destino." << endl;
+            } else {
+                moverEntrada(argumento, destino);
             }
         }
         else {
