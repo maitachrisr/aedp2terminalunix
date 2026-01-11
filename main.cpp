@@ -19,16 +19,31 @@ int main() {
             listar();
         } 
         else if (comando == "mkdir") {
-            cin >> argumento;
-            crearEntrada(argumento, true);
+            if (!(cin >> argumento)) {
+                cout << "Error: falta el nombre de la carpeta.\n"
+                cin.clear();
+                cin.ignore(1000,'\n')
+            } else {
+                crearEntrada(argumento, true);
+            }
         } 
         else if (comando == "touch") {
-            cin >> argumento;
-            crearEntrada(argumento, false);
+            if (!(cin >> argumento)) {
+                cout << "Error: falta el nombre del archivo.\n"
+                cin.clear();
+                cin.ignore(1000,'\n')
+            } else {
+                crearEntrada(argumento, true);
+            }
         } 
         else if (comando == "cd") {
-            cin >> argumento;
-            cambiarDirectorio(argumento);
+            if (!(cin >> argumento)) {
+                cout << "Error: falta el nombre del directorio.\n"
+                cin.clear();
+                cin.ignore(1000,'\n')
+            } else {
+                cambiarDirectorio(argumento, true);
+            }
         }
         else {
             cout << "Comando no reconocido." << endl;
