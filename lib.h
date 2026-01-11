@@ -39,7 +39,7 @@ Nodo* buscarHijo(Nodo* dir, string nombre) {
 // Comando mkdir y touch (la lógica es similar)
 void crearEntrada(string nombre, bool esCarpeta) {
     if (nombre == ""){
-        cout << "Error: nombre invalido.\n"
+        cout << "Error: nombre invalido.\n";
     }
     
     if (buscarHijo(actual, nombre)) {
